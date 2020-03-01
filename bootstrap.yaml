@@ -1,0 +1,23 @@
+- name: install sonobuoy and pre-reqs
+  hosts: localhost
+  become: yes
+  become_method: sudo
+  connection: local
+  gather_facts: yes
+  vars:
+    golang_version: "1.13.4"
+    kubectl_download_path: "https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.8/2019-08-14/bin/linux/amd64/kubectl"
+    iam_authenticator_download_path: "https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator"
+    helm3_download_path: "https://get.helm.sh/"
+    helm3_release_version: "3.1.1"
+    sonobuoy_version: "0.17.2"
+    sonobuoy_download_path: "https://github.com/vmware-tanzu/sonobuoy/releases/download/"
+    bin_path: "/usr/local/bin"
+ 
+  tasks:
+  - include: ./git.yaml
+  - include: ./golang.yaml
+  - include: ./kubectl.yaml
+  - include: ./iam-authenticator.yaml
+  - include: ./helm3.yaml
+  - include: ./sonobuoy.yaml

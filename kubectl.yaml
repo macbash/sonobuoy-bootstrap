@@ -1,0 +1,7 @@
+---
+
+- name: download kubectl
+  get_url:
+    url: "{{ kubectl_download_path }}"
+    dest: "{{ bin_path }}"
+    mode: 0555

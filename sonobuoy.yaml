@@ -1,0 +1,14 @@
+---
+
+- name: download sonobuoy tarball
+  get_url:
+    url: "{{ sonobuoy_download_path }}v{{ sonobuoy_version }}/sonobuoy_{{ sonobuoy_version }}_linux_amd64.tar.gz"
+    dest: "{{ bin_path }}"
+    mode: 0440
+
+- name: Extract the sonobuoy tarball
+  unarchive:
+    src: "{{ bin_path }}/sonobuoy_{{ sonobuoy_version }}_linux_amd64.tar.gz"
+    dest: "{{ bin_path }}"
+    copy: no
+

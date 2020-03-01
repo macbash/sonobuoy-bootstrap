@@ -1,0 +1,7 @@
+---
+
+- name: install golang
+  package:
+    name: golang-{{ golang_version }}
+    state: present
+

@@ -1,0 +1,29 @@
+---
+
+- name: download helm3 tarball
+  get_url:
+    url: "{{ helm3_download_path }}helm-v{{ helm3_release_version }}-linux-amd64.tar.gz"
+    dest: "{{ bin_path }}"
+    mode: 0555
+
+- name: Extract the helm3 tarball
+  unarchive:
+    src: "{{ bin_path }}/helm-v{{ helm3_release_version }}-linux-amd64.tar.gz"
+    dest: "{{ bin_path }}"
+    copy: no
+
+- name: Create symbolic link 
+  file:
+    src: "{{ bin_path }}/linux-amd64/helm"
+    dest: "{{ bin_path }}/helm"
+    state: link
+
+- name: check helm repo stable is added
+  command: bash -c "{{ bin_path }}/helm repo list -o json | grep -w stable"
+  ignore_errors: yes
+  register: helm_stable_repo
+  changed_when: false
+ 
+- name: add helm repo stable
+  command: "{{ bin_path }}/helm repo add stable https://kubernetes-charts.storage.googleapis.com/"
+  when: helm_stable_repo is failure

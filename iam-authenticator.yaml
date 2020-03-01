@@ -1,0 +1,7 @@
+---
+
+- name: download iam-authenticator
+  get_url:
+    url: "{{ iam_authenticator_download_path }}"
+    dest: "{{ bin_path }}"
+    mode: 0555
